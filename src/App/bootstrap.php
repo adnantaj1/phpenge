@@ -3,9 +3,13 @@
 declare(strict_types=1);
 
 /** composer autoload dependencies */
- require __DIR__ . "/../../vendor/autoload.php";
+require __DIR__ . "/../../vendor/autoload.php";
 
- use Framework\App;
- $app = new App();
+use function App\Config\registerRoutes;
+use Framework\App;
 
- return $app; 
+$app = new App();
+registerRoutes($app);
+
+
+return $app;
