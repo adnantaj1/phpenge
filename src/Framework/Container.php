@@ -13,7 +13,7 @@ use function PHPSTORM_META\type;
 class Container
 {
     private array $definations = [];
-
+    private array $resolved = [];
     public function addDefinations(array $newDefinations)
     {
         //$this->definations = array_merge($this->definations, $newDefinations);
@@ -60,8 +60,13 @@ class Container
         if (!array_key_exists($id, $this->definations)) {
             throw new ContainerExceptions("Class {$id} does not exist in container");
         }
+        if (array_key_exists($id, $this->resolved)) {
+            return $this->resolved[$id];
+        }
         $factory = $this->definations[$id];
         $dependency = $factory();
+
+        $this->resolved[$id] = $dependency;
         return $dependency;
     }
 }
